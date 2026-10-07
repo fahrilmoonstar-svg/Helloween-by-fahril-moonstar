@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween 🎃 | Fahril MOONSTAR Dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cyber-pink: #ff2e88;
+            --cyber-cyan: #00f0ff;
+            --cyber-purple: #9d4edd;
+            --cyber-yellow: #ffd500;
+            --cyber-dark: #05050f;
+            --cyber-darker: #020208;
+            --glow-pink: 0 0 8px #ff2e88, 0 0 16px #ff2e88, 0 0 24px #ff2e88;
+            --glow-cyan: 0 0 8px #00f0ff, 0 0 16px #00f0ff, 0 0 24px #00f0ff;
+            --glow-purple: 0 0 8px #9d4edd, 0 0 16px #9d4edd;
+        }
+
+        body {
+            background: linear-gradient(135deg, #05050f 0%, #1a1a3c 50%, #0f0f2a 100%);
+            font-family: 'Comic Neue', sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            color: #fff;
+            position: relative;
+        }
+
+        /* Grid background cyberpunk */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
+        }
+
+        /* Partikel bintang */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--cyber-cyan);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Footer kredit */
+        .credit {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--cyber-cyan);
+            text-shadow: var(--glow-cyan);
+            opacity: 0.85;
+        }
+
+        .credit span {
+            color: var(--cyber-pink);
+            text-shadow: var(--glow-pink);
+            font-weight: 700;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(2, 2, 8, 0.85);
+            z-index: 5;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .overlay-body {
+            background: linear-gradient(145deg, rgba(20, 10, 40, 0.95), rgba(10, 20, 50, 0.95));
+            border: 2px solid var(--cyber-cyan);
+            border-radius: 12px;
+            padding: 32px 36px;
+            text-align: center;
+            box-shadow: 
+                var(--glow-cyan),
+                inset 0 0 30px rgba(0, 240, 255, 0.1);
+            max-width: 90vw;
+            animation: pop 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overlay-body::before,
+        .overlay-body::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: var(--cyber-pink);
+            border-style: solid;
+        }
+
+        .overlay-body::before {
+            top: 0; left: 0;
+            border-width: 3px 0 0 3px;
+        }
+
+        .overlay-body::after {
+            bottom: 0; right: 0;
+            border-width: 0 3px 3px 0;
+        }
+
+        @keyframes pop {
+            from { 
+                transform: scale(0.8) perspective(800px) rotateX(10deg); 
+                opacity: 0; 
+            }
+            to { 
+                transform: scale(1) perspective(800px) rotateX(0); 
+                opacity: 1; 
+            }
+        }
+
+        .overlay-title {
+            font-size: 26px;
+            color: var(--cyber-yellow);
+            margin: 0 0 24px;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--cyber-yellow);
+            letter-spacing: 1px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .overlay-button {
+            background: linear-gradient(135deg, var(--cyber-pink), var(--cyber-purple));
+            color: white;
+            border: 2px solid transparent;
+            padding: 12px 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        .overlay-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .overlay-button:hover::before {
+            left: 100%;
+        }
+
+        .overlay-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--glow-pink);
+            border-color: var(--cyber-pink);
+        }
+
+        .overlay-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        #decline-button {
+            background: linear-gradient(135deg, #2a2a4a, #3a3a6a);
+            border-color: var(--cyber-cyan);
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        #decline-button:hover {
+            box-shadow: var(--glow-cyan);
+            border-color: var(--cyber-cyan);
+        }
+
+        /* Tombol No menghindar */
+        #decline-button {
+            position: relative;
+            transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Video jumpscare */
+        .scare {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: none;
+            background: #000;
+        }
+
+        .scare.active {
+            display: block;
+        }
+
+        .scare video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scare:fullscreen video {
+            object-fit: contain;
+        }
+
+        /* Responsif */
+        @media (max-width: 480px) {
+            .overlay-title { font-size: 20px; }
+            .overlay-body { padding: 24px 20px; }
+            .overlay-button { padding: 10px 22px; font-size: 16px; }
+            .credit { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Partikel latar -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Overlay pertanyaan -->
+    <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+        <div class="overlay-body">
+            <p id="overlay-title" class="overlay-title">¿Quieres celebrar Halloween conmigo? 🎃</p>
+            <div class="button-group">
+                <button id="accept-button" class="overlay-button" type="button">🎃 SÍ</button>
+                <button id="decline-button" class="overlay-button" type="button">🕸 NO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jumpscare -->
+    <div id="scare" class="scare" aria-hidden="true">
+        <video id="video" src="videos/jumpscare.mp4" loop muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Kredit -->
+    <div class="credit">
+        DEVELOPED BY <span>FAHRIL MOONSTAR</span> © 2026 | CYBERPUNK EDITION
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            // Buat partikel otomatis
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = `${Math.random() * 100}%`;
+                p.style.animationDelay = `${Math.random() * 8}s`;
+                p.style.animationDuration = `${6 + Math.random() * 6}s`;
+                const colors = ['#00f0ff', '#ff2e88', '#ffd500', '#9d4edd'];
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.boxShadow = `0 0 4px ${p.style.background}`;
+                particlesContainer.appendChild(p);
+            }
+
+            const overlay       = document.getElementById("overlay");
+            const scare         = document.getElementById("scare");
+            const video         = document.getElementById("video");
+            const acceptButton  = document.getElementById("accept-button");
+            const declineButton = document.getElementById("decline-button");
+
+            // ==== Mulai jumpscare ====
+            function startScare() {
+                if (scare.requestFullscreen) {
+                    scare.requestFullscreen().catch(() => {});
+                } else if (scare.webkitRequestFullscreen) {
+                    scare.webkitRequestFullscreen();
+                }
+
+                overlay.classList.add("hidden");
+                scare.classList.add("active");
+                scare.setAttribute("aria-hidden", "false");
+
+                video.muted = false;
+                video.volume = 1.0;
+
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.then === "function") {
+                    playPromise.catch((err) => {
+                        console.warn("Autoplay audio diblokir:", err);
+                        video.muted = true;
+                        video.play().catch(() => {
+                            scare.innerHTML = `
+                                <div style="color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-size:18px;text-align:center;padding:30px;background:#020208;">
+                                    <div style="color:#ff2e88;font-size:28px;margin-bottom:20px;">⚠️ VIDEO TIDAK DAPAT DIMUAT</div>
+                                    <div style="color:#00f0ff;max-width:400px;line-height:1.6;">
+                                        Pastikan file <code style="color:#ffd500;">jumpscare.mp4</code> tersedia di folder:<br>
+                                        <b>videos/jumpscare.mp4</b><br><br>
+                                        — DEVELOPED BY FAHRIL MOONSTAR —
+                                    </div>
+                                </div>`;
+                        });
+                    });
+                }
+            }
+
+            acceptButton.addEventListener("click", startScare);
+
+            // ==== Tombol No menghindar ====
+            let dodgeCount = 0;
+            const MAX_DODGE = 6;
+
+            function dodge() {
+                if (dodgeCount >= MAX_DODGE) return;
+                dodgeCount++;
+                const dx = (Math.random() - 0.5) * 220;
+                const dy = (Math.random() - 0.5) * 140;
+                declineButton.style.transform = `translate(${dx}px, ${dy}px)`;
+            }
+
+            declineButton.addEventListener("mouseenter", dodge);
+            declineButton.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                dodgeCount < MAX_DODGE ? dodge() : startScare();
+            }, { passive: false });
+
+            declineButton.addEventListener("click", () => {
+                dodgeCount >= MAX_DODGE ? startScare() : dodge();
+            });
+
+            // Reset posisi saat kursor keluar
+            declineButton.addEventListener("mouseleave", () => {
+                setTimeout(() => {
+                    if (dodgeCount < MAX_DODGE) {
+                        declineButton.style.transform = 'translate(0, 0)';
+                    }
+                }, 300);
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && scare.classList.contains("active")) {
+                    // Tetap mainkan video meski keluar fullscreen
+                }
+            });
+
+            video.addEventListener("error", () => {
+                console.error("Gagal memuat video — periksa path file!");
+            });
+        })();
+    </script>
+</body>
+</html>
